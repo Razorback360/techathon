@@ -10,11 +10,38 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model User {
+    id           String   @id @default(cuid())
+    email        String   @unique
+    name         String?
+    createdAt    DateTime @default(now())
+    studentId    String?
+    nationalID   String?
+    proposal     String
+    mobileNumber String
 
-    @@index([name])
+    team   Team   @relation(fields: [teamId], references: [id])
+    teamId String
+}
+
+model Team {
+    id          String       @id @default(cuid())
+    tag         String
+    createdAt   DateTime     @default(now())
+    members     User[]
+    submissions Submission[]
+}
+
+model Submission {
+    id          String   @id @default(cuid())
+    createdAt   DateTime @default(now())
+    team        Team     @relation(fields: [teamId], references: [id])
+    teamId      String
+    attachments String
+    type        Type
+}
+
+enum Type {
+    DESIGN
+    TECH
 }
