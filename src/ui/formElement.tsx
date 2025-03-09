@@ -1,12 +1,12 @@
 "use client"
 
 import {useState} from "react"
-
+import {registerStudents} from "@/actions/actions"
 export default function Form(){
     const [isKFUPM,setKFUPM] = useState<Boolean | null>(null)
     return (
         <>
-            <form action="">
+            <form action={registerStudents}>
                 <label htmlFor="name">Full Name:</label>
                 <input id="name" type="text" name="name" required/>
 
@@ -27,22 +27,23 @@ export default function Form(){
                 <label htmlFor="phoneNum">Phone Number:</label>
                 <input id="phoneNum" type="text" name="phoneNum" required/>
                 
-                <label htmlFor="team-tag">Team Tag: </label>
-                <input id="team-tag" type="text" name="team-tag" required/>
+                <label htmlFor="teamTag">Team Tag: </label>
+                <input id="team-tag" type="text" name="teamTag" required/>
 
                 {isKFUPM === true && <div className="student-form">
-                    <label htmlFor="student-id">Student Id:</label>
-                    <input id="student-id" type="text" name="student-id" required/>
+                    <label htmlFor="studentId">Student Id:</label>
+                    <input id="student-id" type="text" name="studentId" required/>
                 </div>}
 
                 {isKFUPM === false && <div className="national-form">
-                    <label htmlFor="national-id">Iqama / National Id:</label>
-                    <input id="national-id" type="text" name="national-id" required/>
+                    <label htmlFor="nationalId">Iqama / National Id:</label>
+                    <input id="national-id" type="text" name="nationalId" required/>
                 </div>}
                 
-                <label htmlFor="propsoal">Propsoal: </label>
-                <textarea name="propsoal" id="propsoal" placeholder="Type your proposal here"></textarea>
+                <label htmlFor="proposal">Proposal: </label>
+                <textarea name="proposal" id="proposal" placeholder="Type your proposal here"></textarea>
 
+                <button type="submit">Submit</button>
             </form>
         </>
     )
