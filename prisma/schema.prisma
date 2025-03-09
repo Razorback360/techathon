@@ -16,9 +16,9 @@ model User {
     name         String?
     createdAt    DateTime @default(now())
     studentId    String?
-    nationalID   String?
+    nationalId   String?
     proposal     String
-    mobileNumber String
+    phoneNum String
 
     team   Team   @relation(fields: [teamId], references: [id])
     teamId String
@@ -26,7 +26,7 @@ model User {
 
 model Team {
     id          String       @id @default(cuid())
-    tag         String
+    tag         String       @unique
     createdAt   DateTime     @default(now())
     members     User[]
     submissions Submission[]
