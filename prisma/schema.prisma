@@ -15,13 +15,13 @@ model User {
     email        String   @unique
     name         String?
     createdAt    DateTime @default(now())
-    studentId    String?
     nationalID   String?
     proposal     String
     mobileNumber String
 
     team   Team   @relation(fields: [teamId], references: [id])
     teamId String
+    files  File[]
 }
 
 model Team {
@@ -39,6 +39,19 @@ model Submission {
     teamId      String
     attachments String
     type        Type
+}
+
+model File {
+    id           String   @id @default(cuid())
+    bucket       String
+    fileName     String
+    originalName String
+    size         Int
+    url          String
+    createdAt    DateTime @default(now())
+    
+    user         User?     @relation(fields: [userId], references: [id])
+    userId       String?
 }
 
 enum Type {
