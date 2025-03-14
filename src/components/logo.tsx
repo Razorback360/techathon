@@ -1,17 +1,40 @@
-import Image from "next/image"
-import Link from "next/link"
-import { cn } from "@/lib/utils"
+import Image from "next/image";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 interface LogoProps {
-  className?: string
-  size?: "sm" | "md" | "lg" |"xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl" | "8xl" | "9xl" | "10xl"
-  textSize?: "sm" | "md" | "lg"
-  variant?: "default" | "white"
-  showText?: boolean
+  className?: string;
+  size?:
+    | "xs"
+    | "sm"
+    | "md"
+    | "lg"
+    | "xl"
+    | "2xl"
+    | "3xl"
+    | "4xl"
+    | "5xl"
+    | "6xl"
+    | "7xl"
+    | "8xl"
+    | "9xl"
+    | "10xl";
+  textSize?: "xs" | "sm" | "md" | "lg";
+  variant?: "default" | "white";
+  showText?: boolean;
+  textPlacement?: "side" | "under";
 }
 
-export function Logo({ className, size = "md", variant = "default", showText = false, textSize = "md" }: LogoProps) {
+export function Logo({
+  className,
+  size = "md",
+  variant = "default",
+  showText = false,
+  textPlacement = "side",
+  textSize = "md",
+}: LogoProps) {
   const sizes = {
+    xs: 24,
     sm: 32,
     md: 40,
     lg: 56,
@@ -25,19 +48,27 @@ export function Logo({ className, size = "md", variant = "default", showText = f
     "8xl": 176,
     "9xl": 192,
     "10xl": 208,
-  }
+  };
 
   const textSizes = {
+    xs: "text-md",
     sm: "text-lg",
     md: "text-2xl",
-    lg: "text-3xl"
-  }
+    lg: "text-3xl",
+  };
 
   return (
-    <Link href="/" className={cn("flex flex-col items-center gap-2", className)}>
+    <Link
+      href="/"
+      className={cn(
+        "flex items-center gap-2",
+        textPlacement === "side" ? "flex-row" : "flex-col",
+        className,
+      )}
+    >
       <div className="relative">
         <Image
-          src="/logo-.png"
+          src="/logo-no-text.png"
           alt="Techathon Logo"
           width={sizes[size]}
           height={sizes[size]}
@@ -45,11 +76,16 @@ export function Logo({ className, size = "md", variant = "default", showText = f
         />
       </div>
       {showText && (
-        <span className={cn("font-bold font-header italic", textSizes[textSize], variant === "default" ? "text-gradient" : "text-white")}>
+        <span
+          className={cn(
+            "font-header font-bold italic",
+            textSizes[textSize],
+            variant === "default" ? "text-gradient" : "text-white",
+          )}
+        >
           Techathon
         </span>
       )}
     </Link>
-  )
+  );
 }
-
