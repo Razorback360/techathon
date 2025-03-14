@@ -289,6 +289,7 @@ export function RegistrationForm() {
     if (currentStep < 3) {
       setCurrentStep((prev) => prev + 1);
     } else {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       form.handleSubmit(onSubmit)();
     }
   };

@@ -12,8 +12,8 @@ export async function POST(req: Request) {
   try {
     // get the files from the request body
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const data = await req.json()
-    const files = (data) as ShortFileProp[];
+    const data = await req.json();
+    const files = data as ShortFileProp[];
     console.log({ files });
 
     if (!files?.length) {
@@ -66,10 +66,9 @@ export async function POST(req: Request) {
         size: presignedUrl.fileSize,
         url: presignedUrl.publicUrl,
       })),
-    })
+    });
 
-
-    console.log(saveFilesInfo)
+    console.log(saveFilesInfo);
     return NextResponse.json(presignedUrls);
   } catch (error) {
     console.error({ error });
