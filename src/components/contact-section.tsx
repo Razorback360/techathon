@@ -12,7 +12,7 @@ export function ContactSection() {
   const email = "techathon@cckfupm.com";
 
   const copyToClipboard = (text: string, type: "email" | "phone") => {
-    navigator.clipboard.writeText(text);
+    void navigator.clipboard.writeText(text);
     if (type === "email") {
       setEmailCopied(true);
       setTimeout(() => setEmailCopied(false), 2000);

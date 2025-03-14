@@ -26,7 +26,7 @@ export function Navbar() {
       anchor.addEventListener("click", (e) => {
         e.preventDefault();
         const target = document.querySelector(
-          (anchor as HTMLAnchorElement).getAttribute("href") || "",
+          (anchor as HTMLAnchorElement).getAttribute("href") ?? "",
         );
         if (target) {
           target.scrollIntoView({ behavior: "smooth" });
@@ -37,7 +37,7 @@ export function Navbar() {
     anchorRef.current?.addEventListener("click", (e) => {
       e.preventDefault();
       const target = document.querySelector(
-        anchorRef.current?.getAttribute("href") || "",
+        anchorRef.current?.getAttribute("href") ?? "",
       );
       if (target) {
         target.scrollIntoView({ behavior: "smooth" });
