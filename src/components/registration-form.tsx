@@ -121,7 +121,7 @@ export function RegistrationForm() {
     ]
 
     return memberFields.every((field) => {
-      const fieldState = form.getFieldState(field)
+      const fieldState = form.getFieldState(field as Parameters<typeof form.getFieldState>[0])
       return fieldState.isDirty && !fieldState.error
     })
   }
@@ -335,9 +335,9 @@ export function RegistrationForm() {
                     .filter(([_, isExpanded]) => isExpanded)
                     .map(([index]) => index)}
                   onValueChange={(value) => {
-                    const newExpandedState = {}
+                    const newExpandedState: Record<number, boolean> = {}
                     members.forEach((_, index) => {
-                      newExpandedState[index] = value.includes(index.toString())
+                      newExpandedState[index] = value.includes(index.toString()) 
                     })
                     setExpandedMembers(newExpandedState)
                   }}
