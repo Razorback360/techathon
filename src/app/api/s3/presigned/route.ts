@@ -38,7 +38,6 @@ export async function POST(req: Request) {
 
           // add presigned url to the list
           presignedUrls.push({
-            submitterId: file.submitterId,
             fileNameInBucket: fileName,
             originalFileName: file.originalFileName,
             fileSize: file.fileSize,
@@ -61,16 +60,16 @@ export async function POST(req: Request) {
     const saveFilesInfo = await db.file.createManyAndReturn({
       data: publicUrls.map((presignedUrl) => ({
         bucket: env.MINIO_BUCKET_NAME,
-        fileName: presignedUrl.fileNameInBucket,
+        fileNameInBucket: presignedUrl.fileNameInBucket,
         originalName: presignedUrl.originalFileName,
-        size: presignedUrl.fileSize,
+        fileSize: presignedUrl.fileSize,
         url: presignedUrl.publicUrl,
       })),
     })
 
 
     console.log(saveFilesInfo)
-    return NextResponse.json(presignedUrls);
+    return NextResponse.json(saveFilesInfo);
   } catch (error) {
     console.error({ error });
     return new NextResponse("Internal error", { status: 500 });

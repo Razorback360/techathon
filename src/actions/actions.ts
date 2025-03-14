@@ -1,57 +1,51 @@
 "use server";
-import { string, z } from "zod";
-import { revalidatePath } from "next/cache";
 import { db } from "@/server/db";
-import { redirect } from "next/navigation";
 
-// id           String   @id @default(cuid())
-//     email        String   @unique
-//     name         String?
-//     createdAt    DateTime @default(now())
-//     studentId    String?
-//     nationalID   String?
-//     proposal     String
-//     mobileNumber String
+type Member = {
+  name: string;
+  email: string;
+  nationalId: string;
+  university: string;
+  phone: string;
+  fileId: string;
+  teamName: string;
+}
 
-const extended = z.object({
-  name: z.string(),
-  email: z.string(),
-  isKfupm: z.string(),
-  phoneNum: z.string(),
-  proposal: z.string(),
-  teamTag: z.string(),
-  studentId: z.string().optional(),
-  nationalId: z.string().optional(),
-});
+type Team = {
+  name: string;
+  proposal: string;
+}
 
-export async function registerStudents(formData: FormData) {
-  const {teamTag, ...data} = extended.omit({isKfupm:true}).parse({
-    name: formData.get("name"),
-    phoneNum: formData.get("phoneNum"),
-    proposal: formData.get("proposal"),
-    studentId: formData.get("studentId"),
-    nationalID: formData.get("nationalId"),
-    teamTag: formData.get("teamTag"),
-    email: formData.get("email")
-  });
-
-
-  await db.user.create({
+export async function registerStudents(member: Member) {
+  console.log(member);
+  const test = await db.user.create({
     data: {
-      ...data,
+      name: member.name,
+      email: member.email,
+      nationalID: member.nationalId,
+      university: member.university,
+      mobileNumber: member.phone,
+      files: {
+        connect: {
+          id: member.fileId,
+        },
+      },
       team: {
-        connectOrCreate: {
-          create: {
-            tag: teamTag,
-          },
-          where: {
-            tag: teamTag,
-          },
+        connect: {
+          tag: member.teamName
         },
       },
     },
   });
-
-  //   revalidatePath('/dashboard/invoices');
-  //   redirect('/dashboard/invoices');
+  console.log(test);
+}
+export async function createTeam(team: Team) {
+  console.log(team)
+  const test = await db.team.create({
+    data: {
+      tag: team.name,
+      proposal: team.proposal,
+    },
+  });
+  console.log(test);
 }

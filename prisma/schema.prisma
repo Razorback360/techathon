@@ -13,10 +13,10 @@ datasource db {
 model User {
     id           String   @id @default(cuid())
     email        String   @unique
-    name         String?
+    name         String
     createdAt    DateTime @default(now())
-    nationalID   String?
-    proposal     String
+    nationalID   String
+    university   String
     mobileNumber String
 
     team   Team   @relation(fields: [teamId], references: [id])
@@ -29,6 +29,7 @@ model Team {
     tag         String       @unique
     createdAt   DateTime     @default(now())
     members     User[]
+    proposal    String
     submissions Submission[]
 }
 
@@ -42,13 +43,13 @@ model Submission {
 }
 
 model File {
-    id           String   @id @default(cuid())
-    bucket       String
-    fileName     String
-    originalName String
-    size         Int
-    url          String
-    createdAt    DateTime @default(now())
+    id               String   @id @default(cuid())
+    bucket           String
+    fileNameInBucket String
+    originalName     String
+    fileSize         Int
+    url              String
+    createdAt        DateTime @default(now())
 
     user   User?   @relation(fields: [userId], references: [id])
     userId String?

@@ -1,10 +1,10 @@
 export type ShortFileProp = {
-  submitterId: string;
   originalFileName: string;
   fileSize: number;
 };
 
 export type PresignedUrlProp = ShortFileProp & {
+  id: string;
   url: string;
   fileNameInBucket: string;
 };
