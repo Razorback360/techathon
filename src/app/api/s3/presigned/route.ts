@@ -20,7 +20,7 @@ export async function POST(req: Request) {
       return new NextResponse("No files to upload", { status: 400 });
     }
 
-    const presignedUrls = [] as PresignedUrlProp[];
+    const presignedUrls = [] as Omit<PresignedUrlProp, "id">[];
 
     if (files?.length) {
       // use Promise.all to get all the presigned urls in parallel

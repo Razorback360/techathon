@@ -28,7 +28,6 @@ import {
 import { IdCardPreview } from "@/components/id-card-preview";
 import { getPresignedUrls } from "@/lib/minio/client";
 import type { PresignedUrlProp } from "@/lib/minio/server";
-import { createTeam, registerStudents } from "@/actions/actions";
 
 // Add this placeholder function for file uploads at the top of the file, after the imports
 // This is where you'll plug in your file upload implementation
