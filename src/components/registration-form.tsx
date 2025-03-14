@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -26,18 +26,26 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { IdCardPreview } from "@/components/id-card-preview";
+import { getPresignedUrls } from "@/lib/minio/client";
+import type { PresignedUrlProp } from "@/lib/minio/server";
+import { createTeam, registerStudents } from "@/actions/actions";
 
 // Add this placeholder function for file uploads at the top of the file, after the imports
 // This is where you'll plug in your file upload implementation
-async function uploadFile(file: File): Promise<string> {
+async function uploadFile(file: File): Promise<PresignedUrlProp[]> {
   // This is a placeholder - replace with your actual file upload implementation
   console.log("Uploading file:", file.name);
 
   // Simulate upload delay
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  const data = await getPresignedUrls(
+    [{
+      originalFileName: file.name,
+      fileSize: file.size,
+    }]
+  );
 
   // Return a mock URL - your implementation should return the actual uploaded file URL
-  return `https://example.com/uploads/${file.name}`;
+  return data;
 }
 
 // Form validation schema for team information
@@ -191,13 +199,13 @@ export function RegistrationForm() {
     setIsSubmitting(true);
 
     try {
+
       // Step 1: Upload all files first
       const fileUploadPromises = data.members.map(async (member, index) => {
         if (member.studentIdCard) {
           try {
-            const fileUrl = await uploadFile(member.studentIdCard);
-            console.log(`Uploaded ID card for member ${index + 1}:`, fileUrl);
-            return { success: true, index, fileUrl };
+            const file = await uploadFile(member.studentIdCard);
+            return { success: true, index, file };
           } catch (error) {
             console.error(
               `Failed to upload ID card for member ${index + 1}:`,
@@ -220,27 +228,41 @@ export function RegistrationForm() {
         );
         return;
       }
-
-      // Step 2: If all files uploaded successfully, submit the rest of the form data
-      console.log(
-        "All files uploaded successfully. Submitting form data:",
-        data,
-      );
-
+      console.log("hi")
       // Here you would typically send the form data to your backend
-      // Include the file URLs from uploadResults in your submission
-      const formDataWithFileUrls = {
-        ...data,
-        members: data.members.map((member, index) => ({
-          ...member,
-          studentIdCardUrl: uploadResults[index]?.fileUrl,
-        })),
-      };
+      await fetch("/api/team", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({name: data.teamName, proposal: data.projectIdea}),
+      });
+      console.log("hi000")
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      data.members.forEach(async(member, index) => {
+      console.log("hi")
+
+        await fetch("/api/user", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: member.name,
+            email: member.email,
+            nationalId: member.nationalId,
+            university: member.university,
+            phone: member.phone,
+            fileId: uploadResults[index] ? uploadResults[index].file ? uploadResults[index].file[0] ? uploadResults[index].file[0].id : "" : "" : "",
+            teamName: data.teamName,
+          }),
+        });
+      })
 
       // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
       // Show success message or redirect
+      console.log("hi10")
+
       alert("Registration submitted successfully!");
       form.reset();
       setCurrentStep(1);
@@ -289,8 +311,7 @@ export function RegistrationForm() {
     if (currentStep < 3) {
       setCurrentStep((prev) => prev + 1);
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      form.handleSubmit(onSubmit)();
+      await form.handleSubmit(onSubmit)();
     }
   };
 
