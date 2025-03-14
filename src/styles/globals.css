@@ -54,19 +54,24 @@
     from {
       height: 0;
     }
+
     to {
       height: var(--radix-accordion-content-height);
     }
   }
+
   @keyframes accordion-up {
     from {
       height: var(--radix-accordion-content-height);
     }
+
     to {
       height: 0;
     }
   }
+
   @keyframes neonPulse {
+
     0%,
     100% {
       text-shadow:
@@ -78,6 +83,7 @@
         0 0 10px rgba(31, 177, 234, 0.3),
         0 0 21px rgba(31, 177, 234, 0.3);
     }
+
     50% {
       text-shadow:
         0 0 14px rgba(31, 177, 234, 0.5),
@@ -89,7 +95,9 @@
         0 0 42px rgba(31, 177, 234, 0.5);
     }
   }
+
   @keyframes neonGreenPulse {
+
     0%,
     100% {
       text-shadow:
@@ -101,6 +109,7 @@
         0 0 10px rgba(47, 213, 136, 0.3),
         0 0 21px rgba(47, 213, 136, 0.3);
     }
+
     50% {
       text-shadow:
         0 0 14px rgba(47, 213, 136, 0.5),
@@ -117,10 +126,12 @@
 @utility container {
   margin-inline: auto;
   padding-inline: 2rem;
-  @media (width >= --theme(--breakpoint-sm)) {
+
+  @media (width >=--theme(--breakpoint-sm)) {
     max-width: none;
   }
-  @media (width >= 1400px) {
+
+  @media (width >=1400px) {
     max-width: 1400px;
   }
 }
@@ -134,6 +145,7 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
+
   *,
   ::after,
   ::before,

@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { isRegistrationOpen } from "@/config/registration";
 import { Logo } from "@/components/logo";
+import Link from "next/link";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -94,19 +95,15 @@ export function Navbar() {
               Contact
             </a>
             {registrationOpen ? (
-              <a
+              <Link
                 href="#register"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document
-                    .getElementById("register")
-                    ?.scrollIntoView({ behavior: "smooth" });
-                }}
+                className={buttonVariants({
+                  variant: "secondary",
+                  size: "sm",
+                })}
               >
-                <Button variant="secondary" size="sm">
-                  Register Now
-                </Button>
-              </a>
+                Register Now
+              </Link>
             ) : (
               <Button variant="outline" size="sm" disabled>
                 Coming Soon
@@ -152,20 +149,15 @@ export function Navbar() {
                 Contact
               </a>
               {registrationOpen ? (
-                <a
+                <Link
                   href="#register"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setIsMenuOpen(false);
-                    document
-                      .getElementById("register")
-                      ?.scrollIntoView({ behavior: "smooth" });
-                  }}
+                  className={buttonVariants({
+                    variant: "secondary",
+                    size: "sm",
+                  })}
                 >
-                  <Button variant="secondary" size="lg" className="mt-4">
-                    Register Now
-                  </Button>
-                </a>
+                  Register Now
+                </Link>
               ) : (
                 <Button variant="outline" size="lg" className="mt-4" disabled>
                   Coming Soon
