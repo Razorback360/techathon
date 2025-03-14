@@ -77,7 +77,7 @@ export function RegistrationSection() {
                 </Button>
               </div>
 
-              <div className="max-w-2xl mx-auto bg-neon-darkblue/50 border border-neon-blue/30 rounded-lg p-6 backdrop-blur-sm">
+              <div className="max-w-2xl mx-auto bg-neon-darkblue/50 border border-neon-blue/30 rounded-lg p-6 backdrop-blur-xs">
                 <h3 className="text-xl font-semibold mb-4 text-neon-blue">Get Ready for Techathon 2025!</h3>
                 <p className="mb-4">
                   Prepare your team and ideas for the upcoming hackathon. Registration will open soon, allowing you to:

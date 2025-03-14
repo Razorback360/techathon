@@ -36,7 +36,7 @@ export function AboutSection() {
           </FadeIn>
 
           <FadeIn direction="left">
-            <div className="bg-secondary/50 rounded-xl p-6 backdrop-blur-sm border border-secondary">
+            <div className="bg-secondary/50 rounded-xl p-6 backdrop-blur-xs border border-secondary">
               <h3 className="text-2xl font-bold mb-6 text-center font-header">Event Details</h3>
 
               <div className="space-y-6">

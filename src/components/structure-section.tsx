@@ -49,7 +49,7 @@ export function StructureSection() {
 
         <div className="relative">
           {/* Timeline connector (desktop only) */}
-          <div className="hidden md:block absolute left-1/2 top-0 h-full w-0.5 bg-gradient-to-b from-accent via-primary to-accent -translate-x-1/2" />
+          <div className="hidden md:block absolute left-1/2 top-0 h-full w-0.5 bg-linear-to-b from-accent via-primary to-accent -translate-x-1/2" />
 
           <div className="space-y-16 md:space-y-0 relative">
             {phases.map((phase, index) => (
@@ -63,7 +63,7 @@ export function StructureSection() {
 
                   <div className={`w-full md:w-1/2 ${index % 2 === 0 ? "md:pr-16" : "md:pl-16"}`}>
                     <motion.div
-                      className="bg-secondary/50 p-6 rounded-xl backdrop-blur-sm border border-secondary relative"
+                      className="bg-secondary/50 p-6 rounded-xl backdrop-blur-xs border border-secondary relative"
                       whileHover={{ scale: 1.03 }}
                       transition={{ type: "spring", stiffness: 300, damping: 25 }}
                     >

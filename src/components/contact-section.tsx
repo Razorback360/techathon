@@ -35,7 +35,7 @@ export function ContactSection() {
         <div className="max-w-2xl mx-auto">
           <div className="grid md:grid-cols-1 gap-8">
             <FadeIn direction="right">
-              <div className="bg-secondary/50 rounded-xl p-6 backdrop-blur-sm border border-secondary h-full">
+              <div className="bg-secondary/50 rounded-xl p-6 backdrop-blur-xs border border-secondary h-full">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="bg-accent/10 p-3 rounded-lg">
                     <Mail className="h-6 w-6 text-accent" />

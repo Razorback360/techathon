@@ -64,7 +64,7 @@ export default function UploadForm() {
             key={file.name}
             className="flex flex-col items-stretch justify-center gap-2"
           >
-            <div className="flex-grow">
+            <div className="grow">
               <p className="font-medium">{file.name}</p>
               <p className="text-sm text-muted-foreground">
                 {formatBytes(file.size)}

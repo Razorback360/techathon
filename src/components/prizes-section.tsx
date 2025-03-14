@@ -23,7 +23,7 @@ export function PrizesSection() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           <FadeIn delay={0.1}>
             <motion.div
-              className="bg-secondary/50 rounded-xl p-6 backdrop-blur-sm border border-secondary h-full flex flex-col items-center text-center"
+              className="bg-secondary/50 rounded-xl p-6 backdrop-blur-xs border border-secondary h-full flex flex-col items-center text-center"
               whileHover={{ scale: 1.04, boxShadow: "0 0 20px rgba(234, 179, 8, 0.3)" }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
             >
@@ -42,7 +42,7 @@ export function PrizesSection() {
 
           <FadeIn delay={0.2}>
             <motion.div
-              className="bg-secondary/50 rounded-xl p-6 backdrop-blur-sm border border-secondary h-full flex flex-col items-center text-center"
+              className="bg-secondary/50 rounded-xl p-6 backdrop-blur-xs border border-secondary h-full flex flex-col items-center text-center"
               whileHover={{ scale: 1.03 }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
             >
@@ -59,7 +59,7 @@ export function PrizesSection() {
 
           <FadeIn delay={0.3}>
             <motion.div
-              className="bg-secondary/50 rounded-xl p-6 backdrop-blur-sm border border-secondary h-full flex flex-col items-center text-center"
+              className="bg-secondary/50 rounded-xl p-6 backdrop-blur-xs border border-secondary h-full flex flex-col items-center text-center"
               whileHover={{ scale: 1.03 }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
             >
@@ -76,7 +76,7 @@ export function PrizesSection() {
 
           <FadeIn delay={0.4}>
             <motion.div
-              className="bg-secondary/50 rounded-xl p-6 backdrop-blur-sm border border-secondary h-full flex flex-col items-center text-center"
+              className="bg-secondary/50 rounded-xl p-6 backdrop-blur-xs border border-secondary h-full flex flex-col items-center text-center"
               whileHover={{ scale: 1.03 }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
             >
