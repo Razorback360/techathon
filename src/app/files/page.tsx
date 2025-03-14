@@ -1,7 +1,5 @@
 import ProfileCreateForm from "@/app/files/_components/upload-form";
-import UploadGallery from "@/app/files/_components/upload-gallery";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function UppyDashboard() {
   return (

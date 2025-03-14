@@ -89,9 +89,9 @@ export function AnimatedBackground() {
     }
 
     const connectParticles = () => {
-      for (let a = 0; a < particlesArray.length; a++) {
+      for (let a = 0; a < particlesArray.length ; a++) {
         for (let b = a; b < particlesArray.length; b++) {
-          const dx = particlesArray[a].x - particlesArray[b].x
+          const dx = particlesArray[a]?.x - particlesArray[b]?.x
           const dy = particlesArray[a].y - particlesArray[b].y
           const distance = Math.sqrt(dx * dx + dy * dy)
 

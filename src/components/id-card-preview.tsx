@@ -1,92 +1,188 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Image from "next/image"
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
-import { X, Eye } from "lucide-react"
+import type React from "react";
+
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { X, Eye, Upload, Loader2 } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import useUploadFile from "@/hooks/use-upload-file";
 
 interface IdCardPreviewProps {
-  file: File
-  onRemove?: () => void
-  previewSize?: "sm" | "md" | "lg"
-  className?: string
+  file?: File;
+  onRemove?: () => void;
+  previewSize?: "sm" | "md" | "lg";
+  className?: string;
+  onChange?: (file: File) => void;
+  inputId?: string;
+  showUploadControls?: boolean;
 }
 
-export function IdCardPreview({ file, onRemove, previewSize = "md", className = "" }: IdCardPreviewProps) {
-  const [previewUrl, setPreviewUrl] = useState<string>(() => {
-    if (!file) return ""
-    return URL.createObjectURL(file)
-  })
+export function IdCardPreview({
+  file,
+  onRemove,
+  previewSize = "md",
+  className = "",
+  onChange,
+  inputId = "id-card-upload",
+  showUploadControls = false,
+}: IdCardPreviewProps) {
+  const [previewUrl, setPreviewUrl] = useState<string>("");
+  const {
+    isLoading,
+    files,
+    onFileUploadChange,
+    onUploadFile,
+    progress,
+    onCancelFile,
+  } = useUploadFile();
 
-  // Clean up object URL on unmount
-  useState(() => {
-    return () => {
-      if (previewUrl) {
-        URL.revokeObjectURL(previewUrl)
-      }
+  // Create object URL when file changes
+  useEffect(() => {
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setPreviewUrl(url);
+      return () => URL.revokeObjectURL(url);
+    } else {
+      setPreviewUrl("");
     }
-  })
+  }, [file]);
 
+  // Handle file selection from the hook
+  useEffect(() => {
+    if (files.length > 0 && files[0] && onChange) {
+      onChange(files[0]);
+    }
+  }, [files, onChange]);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onFileUploadChange(e);
+  };
+
+  const handleUpload = async () => {
+    await onUploadFile();
+  };
+
+  const isPdf = file?.type.includes("pdf");
   const sizes = {
     sm: "w-12 h-12",
     md: "w-20 h-20",
     lg: "w-32 h-32",
-  }
-
-  const isPdf = file.type.includes("pdf")
+  };
 
   return (
     <div className={`relative ${className}`}>
-      <Dialog>
-        <DialogTrigger asChild>
-          <button
-            className={`${sizes[previewSize]} border border-neon-blue/50 rounded-md overflow-hidden bg-background/50 flex items-center justify-center cursor-pointer hover:border-neon-blue transition-colors`}
-            aria-label="View ID card"
-          >
-            {isPdf ? (
-              <div className="text-[10px] text-center p-1 flex flex-col items-center">
-                <span>PDF</span>
-                <Eye className="h-4 w-4" />
+      {file ? (
+        <>
+          <Dialog>
+            <DialogTrigger asChild>
+              <button
+                className={`${sizes[previewSize]} border-neon-blue/50 bg-background/50 hover:border-neon-blue flex cursor-pointer items-center justify-center overflow-hidden rounded-md border transition-colors`}
+                aria-label="View ID card"
+              >
+                {isPdf ? (
+                  <div className="flex flex-col items-center p-1 text-center text-[10px]">
+                    <span>PDF</span>
+                    <Eye className="h-4 w-4" />
+                  </div>
+                ) : (
+                  <Image
+                    src={previewUrl || "/placeholder.svg"}
+                    alt="ID Preview"
+                    width={
+                      previewSize === "sm"
+                        ? 48
+                        : previewSize === "md"
+                          ? 80
+                          : 128
+                    }
+                    height={
+                      previewSize === "sm"
+                        ? 48
+                        : previewSize === "md"
+                          ? 80
+                          : 128
+                    }
+                    className="object-cover"
+                  />
+                )}
+              </button>
+            </DialogTrigger>
+            <DialogContent className="max-w-3xl">
+              <div className="relative flex h-full w-full items-center justify-center">
+                {isPdf ? (
+                  <iframe src={previewUrl} className="h-[80vh] w-full" />
+                ) : (
+                  <Image
+                    src={previewUrl || "/placeholder.svg"}
+                    alt="ID Card"
+                    width={800}
+                    height={600}
+                    className="max-h-[80vh] object-contain"
+                  />
+                )}
               </div>
-            ) : (
-              <Image
-                src={previewUrl || "/placeholder.svg"}
-                alt="ID Preview"
-                width={previewSize === "sm" ? 48 : previewSize === "md" ? 80 : 128}
-                height={previewSize === "sm" ? 48 : previewSize === "md" ? 80 : 128}
-                className="object-cover"
-              />
-            )}
-          </button>
-        </DialogTrigger>
-        <DialogContent className="max-w-3xl">
-          <div className="relative w-full h-full flex items-center justify-center">
-            {isPdf ? (
-              <iframe src={previewUrl} className="w-full h-[80vh]" />
-            ) : (
-              <Image
-                src={previewUrl || "/placeholder.svg"}
-                alt="ID Card"
-                width={800}
-                height={600}
-                className="object-contain max-h-[80vh]"
-              />
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
+            </DialogContent>
+          </Dialog>
 
-      {onRemove && (
-        <button
-          type="button"
-          onClick={onRemove}
-          className="absolute -top-2 -right-2 bg-red-500 rounded-full p-1 text-white"
-          aria-label="Remove file"
+          {onRemove && (
+            <button
+              type="button"
+              onClick={onRemove}
+              className="absolute -top-2 -right-2 rounded-full bg-red-500 p-1 text-white"
+              aria-label="Remove file"
+            >
+              <X className="h-3 w-3" />
+            </button>
+          )}
+
+          {showUploadControls && !isLoading && (
+            <button
+              type="button"
+              onClick={handleUpload}
+              className="bg-neon-blue absolute -right-2 -bottom-2 rounded-full p-1 text-white"
+              aria-label="Upload file"
+            >
+              <Upload className="h-3 w-3" />
+            </button>
+          )}
+
+          {isLoading && (
+            <div className="absolute right-0 -bottom-6 left-0">
+              <Progress value={progress} className="h-1 w-full" />
+            </div>
+          )}
+        </>
+      ) : (
+        <label
+          htmlFor={inputId}
+          className={`${sizes[previewSize]} border-neon-blue/50 hover:bg-neon-blue/5 flex cursor-pointer flex-col items-center justify-center rounded-md border-2 border-dashed transition-colors`}
         >
-          <X className="h-3 w-3" />
-        </button>
+          {isLoading ? (
+            <Loader2 className="text-neon-blue h-5 w-5 animate-spin" />
+          ) : (
+            <>
+              <Upload className="text-neon-blue h-5 w-5" />
+              <span className="mt-1 text-center text-[10px]">Upload</span>
+            </>
+          )}
+          <input
+            id={inputId}
+            type="file"
+            accept="image/jpeg,image/png,image/jpg,application/pdf"
+            className="hidden"
+            onChange={handleFileChange}
+            disabled={isLoading}
+          />
+        </label>
+      )}
+
+      {isLoading && !file && (
+        <div className="absolute right-0 -bottom-6 left-0">
+          <Progress value={progress} className="h-1 w-full" />
+        </div>
       )}
     </div>
-  )
+  );
 }
-
