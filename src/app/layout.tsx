@@ -2,6 +2,8 @@ import type React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/styles/globals.css";
+import { PostHogProvider } from "@/components/posthog-provider";
+import posthog from "posthog-js";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -49,7 +51,9 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <PostHogProvider>{children}</PostHogProvider>
+      </body>
     </html>
   );
 }
