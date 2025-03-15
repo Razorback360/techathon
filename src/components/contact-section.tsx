@@ -75,6 +75,7 @@ export function ContactSection() {
               </p>
               <Link
                 href="https://forms.gle/rVZSGH5zWUk5SGNG7"
+                target="_blank"
                 className={buttonVariants({
                   variant: "secondary",
                   size: "lg",

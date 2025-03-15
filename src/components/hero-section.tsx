@@ -1,18 +1,49 @@
 "use client";
 
-import { TypewriterText } from "@/components/typewriter-text";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { CountdownTimer } from "@/components/countdown-timer-numberflow";
 import { FadeIn } from "@/components/fade-in";
-import { CountdownTimer } from "@/components/countdown-timer";
 import { Logo } from "@/components/logo";
+import { TypewriterText } from "@/components/typewriter-text";
+import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 
+const timers = [
+  {
+    title: "Registration Closes",
+    date: new Date("2025-03-23T00:00:00"),
+  },
+  {
+    title: "Hackathon Starts",
+    date: new Date("2025-04-10T22:00:00"),
+  },
+  {
+    title: "Hackathon Design Phase Ends",
+    date: new Date("2025-04-11T01:00:00"),
+  },
+  {
+    title: "Hackathon Implementation Phase Ends",
+    date: new Date("2025-04-13T06:00:00"),
+  },
+];
+
+// find the closest event to the current date that is in the future
+// if no event is found, use that last event
+function getNextClosestEvent(date: Date): {
+  title: string;
+  date: Date;
+} {
+  const closestEvent = timers.find((event) => event.date > date);
+  if (closestEvent) {
+    return closestEvent;
+  }
+  return timers[timers.length - 1]!;
+}
+
 export function HeroSection() {
-  // March 13, 2025
-  const eventDate = new Date("2025-03-13T00:00:00");
+  const eventDate = getNextClosestEvent(new Date());
 
   return (
-    <section className="relative flex min-h-screen flex-col justify-center overflow-hidden pt-16">
+    <section className="relative flex min-h-screen flex-col justify-center overflow-hidden pt-0">
       {/* Decorative elements */}
       <div className="bg-primary/20 absolute top-1/4 -left-20 h-64 w-64 rounded-full blur-3xl" />
       <div className="bg-accent/10 absolute -right-20 bottom-1/4 h-64 w-64 rounded-full blur-3xl" />
@@ -36,20 +67,24 @@ export function HeroSection() {
 
           <FadeIn delay={0.5}>
             <p className="text-foreground font-body mb-8 text-xl md:text-2xl">
-              Join the Kingdom's brightest minds in an intense hackathon where
-              creativity meets technology.
+              Join the Kingdom&apos;s brightest minds in an intense hackathon
+              where creativity meets technology.
             </p>
           </FadeIn>
 
           <FadeIn delay={0.8}>
-            <div className="mb-12">
-              <CountdownTimer targetDate={eventDate} />
+            <div className="text-secondary mb-8 text-2xl font-bold md:text-4xl">
+              {eventDate.title}
+            </div>
+            <div className="mb-10">
+              <CountdownTimer targetDate={eventDate.date} />
             </div>
           </FadeIn>
 
           <FadeIn delay={1}>
             <Link
               href="https://forms.gle/rVZSGH5zWUk5SGNG7"
+              target="_blank"
               className={buttonVariants({
                 variant: "secondary",
                 size: "lg",

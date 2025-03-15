@@ -97,6 +97,7 @@ export function Navbar() {
             {registrationOpen ? (
               <Link
                 href="https://forms.gle/rVZSGH5zWUk5SGNG7"
+                target="_blank"
                 className={buttonVariants({
                   variant: "secondary",
                   size: "sm",
@@ -151,6 +152,7 @@ export function Navbar() {
               {registrationOpen ? (
                 <Link
                   href="https://forms.gle/rVZSGH5zWUk5SGNG7"
+                  target="_blank"
                   className={buttonVariants({
                     variant: "secondary",
                     size: "sm",
