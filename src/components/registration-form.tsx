@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -41,12 +41,20 @@ async function uploadFile(file: File): Promise<PresignedUrlProp[]> {
     {
       originalFileName: file.name,
       fileSize: file.size,
-    }]
-  );
+    },
+  ]);
   const callback = (e: number) => {
-    console.log(e)
-  }
-  await handleUpload([file], data, () => { console.log("hiii") }, callback, callback);
+    console.log(e);
+  };
+  await handleUpload(
+    [file],
+    data,
+    () => {
+      console.log("hiii");
+    },
+    callback,
+    callback,
+  );
 
   // Return a mock URL - your implementation should return the actual uploaded file URL
   return data;
@@ -212,7 +220,7 @@ export function RegistrationForm() {
           } catch (error) {
             console.error(
               `Failed to upload ID card for member ${index + 1}:`,
-              error,  
+              error,
             );
             return { success: false, index, error };
           }
@@ -556,18 +564,20 @@ export function RegistrationForm() {
                             </div>
 
                             {members.length > 3 && (
-                              <Button
-                                type="button"
-                                variant="destructive"
-                                size="sm"
+                              <div
+                                className={buttonVariants({
+                                  variant: "destructive",
+                                  size: "sm",
+                                  className:
+                                    "mr-2 flex items-center gap-1 border-0 bg-red-500 text-white hover:bg-red-600",
+                                })}
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   removeTeamMember(index);
                                 }}
-                                className="mr-2 flex items-center gap-1 border-0 bg-red-500 text-white hover:bg-red-600"
                               >
                                 <Minus className="h-4 w-4" /> Remove
-                              </Button>
+                              </div>
                             )}
                           </div>
                         </AccordionTrigger>
