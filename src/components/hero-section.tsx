@@ -10,7 +10,7 @@ import Link from "next/link";
 const timers = [
   {
     title: "Registration Closes",
-    date: new Date("2025-03-23T00:00:00"),
+    date: new Date("2025-03-29T00:00:00"),
   },
   {
     title: "Hackathon Starts",
