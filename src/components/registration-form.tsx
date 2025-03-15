@@ -28,6 +28,7 @@ import {
 import { IdCardPreview } from "@/components/id-card-preview";
 import { getPresignedUrls, handleUpload } from "@/lib/minio/client";
 import type { PresignedUrlProp } from "@/lib/minio/server";
+import { toast } from "sonner";
 
 // Add this placeholder function for file uploads at the top of the file, after the imports
 // This is where you'll plug in your file upload implementation
@@ -36,8 +37,8 @@ async function uploadFile(file: File): Promise<PresignedUrlProp[]> {
   console.log("Uploading file:", file.name);
 
   // Simulate upload delay
-  const data = await getPresignedUrls(
-    [{
+  const data = await getPresignedUrls([
+    {
       originalFileName: file.name,
       fileSize: file.size,
     }]
@@ -202,7 +203,6 @@ export function RegistrationForm() {
     setIsSubmitting(true);
 
     try {
-
       // Step 1: Upload all files first
       const fileUploadPromises = data.members.map(async (member, index) => {
         if (member.studentIdCard) {
@@ -226,25 +226,24 @@ export function RegistrationForm() {
       const failedUploads = uploadResults.filter((result) => !result.success);
 
       if (failedUploads.length > 0) {
-        alert(
+        toast.error(
           `Failed to upload ${failedUploads.length} files. Please try again.`,
         );
         return;
       }
-      console.log("hi")
       // Here you would typically send the form data to your backend
       await fetch("/api/team", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({name: data.teamName, proposal: data.projectIdea}),
+        body: JSON.stringify({
+          name: data.teamName,
+          proposal: data.projectIdea,
+        }),
       });
-      console.log("hi000")
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      data.members.forEach(async(member, index) => {
-      console.log("hi")
-
+      data.members.forEach(async (member, index) => {
         await fetch("/api/user", {
           method: "POST",
           headers: {
@@ -256,22 +255,26 @@ export function RegistrationForm() {
             nationalId: member.nationalId,
             university: member.university,
             phone: member.phone,
-            fileId: uploadResults[index] ? uploadResults[index].file ? uploadResults[index].file[0] ? uploadResults[index].file[0].id : "" : "" : "",
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            fileId: uploadResults[index]
+              ? uploadResults[index].file
+                ? uploadResults[index].file[0]
+                  ? uploadResults[index].file[0].id
+                  : ""
+                : ""
+              : "",
             teamName: data.teamName,
           }),
         });
-      })
+      });
 
-      // Simulate API call
       // Show success message or redirect
-      console.log("hi10")
-
-      alert("Registration submitted successfully!");
+      toast.success("Registration submitted successfully!");
       form.reset();
       setCurrentStep(1);
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert(
+      toast.error(
         "There was an error submitting your registration. Please try again.",
       );
     } finally {
@@ -435,6 +438,9 @@ export function RegistrationForm() {
                         />
                       </FormControl>
                       <FormMessage />
+                      <FormDescription>
+                        Must be a valid phone number (05xxxxxxxx)
+                      </FormDescription>
                     </FormItem>
                   )}
                 />
@@ -646,6 +652,9 @@ export function RegistrationForm() {
                                       />
                                     </FormControl>
                                     <FormMessage />
+                                    <FormDescription>
+                                      Must be a valid phone number (05xxxxxxxx)
+                                    </FormDescription>
                                   </FormItem>
                                 )}
                               />
@@ -675,9 +684,7 @@ export function RegistrationForm() {
                               <FormField
                                 control={form.control}
                                 name={`members.${index}.studentIdCard`}
-                                render={({
-                                  field: { value, onChange, ...fieldProps },
-                                }) => (
+                                render={({ field }) => (
                                   <FormItem>
                                     <FormLabel className="text-foreground">
                                       Student ID Card *
@@ -691,11 +698,14 @@ export function RegistrationForm() {
                                       <FormControl>
                                         <div className="flex flex-col gap-2">
                                           <IdCardPreview
-                                            file={value}
-                                            onChange={(file) => onChange(file)}
-                                            onRemove={() => onChange(undefined)}
+                                            file={field.value}
+                                            onChange={(file) =>
+                                              field.onChange(file)
+                                            }
+                                            onRemove={() =>
+                                              field.onChange(undefined)
+                                            }
                                             inputId={`student-id-${index}`}
-                                            showUploadControls={true}
                                           />
                                           <FormMessage />
                                         </div>

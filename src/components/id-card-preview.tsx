@@ -4,10 +4,15 @@ import type React from "react";
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { X, Eye, Upload, Loader2 } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
-import useUploadFile from "@/hooks/use-upload-file";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { X, Eye, Upload } from "lucide-react";
 
 interface IdCardPreviewProps {
   file?: File;
@@ -16,7 +21,6 @@ interface IdCardPreviewProps {
   className?: string;
   onChange?: (file: File) => void;
   inputId?: string;
-  showUploadControls?: boolean;
 }
 
 export function IdCardPreview({
@@ -26,17 +30,8 @@ export function IdCardPreview({
   className = "",
   onChange,
   inputId = "id-card-upload",
-  showUploadControls = false,
 }: IdCardPreviewProps) {
   const [previewUrl, setPreviewUrl] = useState<string>("");
-  const {
-    isLoading,
-    files,
-    onFileUploadChange,
-    onUploadFile,
-    progress,
-    onCancelFile,
-  } = useUploadFile();
 
   // Create object URL when file changes
   useEffect(() => {
@@ -49,19 +44,11 @@ export function IdCardPreview({
     }
   }, [file]);
 
-  // Handle file selection from the hook
-  useEffect(() => {
-    if (files.length > 0 && files[0] && onChange) {
-      onChange(files[0]);
-    }
-  }, [files, onChange]);
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onFileUploadChange(e);
-  };
-
-  const handleUpload = async () => {
-    await onUploadFile();
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile && onChange) {
+      onChange(selectedFile);
+    }
   };
 
   const isPdf = file?.type.includes("pdf");
@@ -76,6 +63,13 @@ export function IdCardPreview({
       {file ? (
         <>
           <Dialog>
+            <DialogHeader className="hidden" hidden>
+              <DialogTitle>ID Card Preview</DialogTitle>
+              <DialogDescription>
+                Preview your ID card to verify your identity.
+              </DialogDescription>
+              x
+            </DialogHeader>
             <DialogTrigger asChild>
               <button
                 className={`${sizes[previewSize]} border-neon-blue/50 bg-background/50 hover:border-neon-blue flex cursor-pointer items-center justify-center overflow-hidden rounded-md border transition-colors`}
@@ -136,52 +130,22 @@ export function IdCardPreview({
               <X className="h-3 w-3" />
             </button>
           )}
-
-          {showUploadControls && !isLoading && (
-            <button
-              type="button"
-              onClick={handleUpload}
-              className="bg-neon-blue absolute -right-2 -bottom-2 rounded-full p-1 text-white"
-              aria-label="Upload file"
-            >
-              <Upload className="h-3 w-3" />
-            </button>
-          )}
-
-          {isLoading && (
-            <div className="absolute right-0 -bottom-6 left-0">
-              <Progress value={progress} className="h-1 w-full" />
-            </div>
-          )}
         </>
       ) : (
         <label
           htmlFor={inputId}
           className={`${sizes[previewSize]} border-neon-blue/50 hover:bg-neon-blue/5 flex cursor-pointer flex-col items-center justify-center rounded-md border-2 border-dashed transition-colors`}
         >
-          {isLoading ? (
-            <Loader2 className="text-neon-blue h-5 w-5 animate-spin" />
-          ) : (
-            <>
-              <Upload className="text-neon-blue h-5 w-5" />
-              <span className="mt-1 text-center text-[10px]">Upload</span>
-            </>
-          )}
+          <Upload className="text-neon-blue h-5 w-5" />
+          <span className="mt-1 text-center text-[10px]">Upload</span>
           <input
             id={inputId}
             type="file"
             accept="image/jpeg,image/png,image/jpg,application/pdf"
             className="hidden"
             onChange={handleFileChange}
-            disabled={isLoading}
           />
         </label>
-      )}
-
-      {isLoading && !file && (
-        <div className="absolute right-0 -bottom-6 left-0">
-          <Progress value={progress} className="h-1 w-full" />
-        </div>
       )}
     </div>
   );
