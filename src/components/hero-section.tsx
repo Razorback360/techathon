@@ -49,7 +49,7 @@ export function HeroSection() {
 
           <FadeIn delay={1}>
             <Link
-              href="#register"
+              href="https://forms.gle/rVZSGH5zWUk5SGNG7"
               className={buttonVariants({
                 variant: "secondary",
                 size: "lg",

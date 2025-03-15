@@ -74,7 +74,7 @@ export function ContactSection() {
                 Organized by KFUPM Computer Club
               </p>
               <Link
-                href="#register"
+                href="https://forms.gle/rVZSGH5zWUk5SGNG7"
                 className={buttonVariants({
                   variant: "secondary",
                   size: "lg",

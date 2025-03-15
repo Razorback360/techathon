@@ -96,7 +96,7 @@ export function Navbar() {
             </a>
             {registrationOpen ? (
               <Link
-                href="#register"
+                href="https://forms.gle/rVZSGH5zWUk5SGNG7"
                 className={buttonVariants({
                   variant: "secondary",
                   size: "sm",
@@ -150,7 +150,7 @@ export function Navbar() {
               </a>
               {registrationOpen ? (
                 <Link
-                  href="#register"
+                  href="https://forms.gle/rVZSGH5zWUk5SGNG7"
                   className={buttonVariants({
                     variant: "secondary",
                     size: "sm",
