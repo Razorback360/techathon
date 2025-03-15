@@ -39,6 +39,7 @@ export const handleUpload = async (
 ) => {
   const uploadToS3Response = await Promise.all(
     presignedUrls.map((presignedUrl) => {
+      // @ts-expect-error there's probably files
       return uploadToS3(presignedUrl, files[0], setProgress, setRemaining);
     }),
   );
