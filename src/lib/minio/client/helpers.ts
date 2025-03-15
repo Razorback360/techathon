@@ -39,15 +39,7 @@ export const handleUpload = async (
 ) => {
   const uploadToS3Response = await Promise.all(
     presignedUrls.map((presignedUrl) => {
-      const file = files.find(
-        (file) =>
-          file.name === presignedUrl.originalFileName &&
-          file.size === presignedUrl.fileSize,
-      );
-      if (!file) {
-        throw new Error("File not found");
-      }
-      return uploadToS3(presignedUrl, file, setProgress, setRemaining);
+      return uploadToS3(presignedUrl, files[0], setProgress, setRemaining);
     }),
   );
 

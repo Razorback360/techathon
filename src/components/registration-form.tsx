@@ -26,7 +26,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { IdCardPreview } from "@/components/id-card-preview";
-import { getPresignedUrls } from "@/lib/minio/client";
+import { getPresignedUrls, handleUpload } from "@/lib/minio/client";
 import type { PresignedUrlProp } from "@/lib/minio/server";
 
 // Add this placeholder function for file uploads at the top of the file, after the imports
@@ -42,6 +42,10 @@ async function uploadFile(file: File): Promise<PresignedUrlProp[]> {
       fileSize: file.size,
     }]
   );
+  const callback = (e: number) => {
+    console.log(e)
+  }
+  await handleUpload([file], data, () => { console.log("hiii") }, callback, callback);
 
   // Return a mock URL - your implementation should return the actual uploaded file URL
   return data;
@@ -208,7 +212,7 @@ export function RegistrationForm() {
           } catch (error) {
             console.error(
               `Failed to upload ID card for member ${index + 1}:`,
-              error,
+              error,  
             );
             return { success: false, index, error };
           }

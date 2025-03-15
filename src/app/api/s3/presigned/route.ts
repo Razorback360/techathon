@@ -51,10 +51,10 @@ export async function POST(req: Request) {
 
     const publicUrls = presignedUrls.map((presignedUrl) => {
       const publicUrl = `http${env.MINIO_SSL === "true" ? "s" : ""}://${env.MINIO_ENDPOINT}:${env.MINIO_PORT}/${env.MINIO_BUCKET_NAME}/${presignedUrl.fileNameInBucket}`;
-      return { ...presignedUrl, publicUrl };
+      return { ...presignedUrl, publicUrl, id:""};
     });
 
-    console.log({ publicUrls });
+    console.log(publicUrls);
 
     // Get the file name in bucket from the database
     const saveFilesInfo = await db.file.createManyAndReturn({
@@ -68,8 +68,12 @@ export async function POST(req: Request) {
     });
 
 
-    console.log(saveFilesInfo)
-    return NextResponse.json(saveFilesInfo);
+    saveFilesInfo.forEach((file, index) => {
+      if (publicUrls[index]) {
+        publicUrls[index].id = file.id;
+      }
+    });
+    return NextResponse.json(publicUrls);
   } catch (error) {
     console.error({ error });
     return new NextResponse("Internal error", { status: 500 });
