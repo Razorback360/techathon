@@ -22,7 +22,7 @@ export function ContactSection() {
   return (
     <section
       id="contact"
-      className="bg-secondary/30 relative overflow-hidden py-20"
+      className="bg-secondary/20 relative overflow-hidden py-20"
     >
       <div className="bg-primary/10 absolute top-0 right-0 h-72 w-72 rounded-full blur-3xl" />
 
@@ -39,7 +39,7 @@ export function ContactSection() {
         <div className="mx-auto max-w-2xl">
           <div className="grid gap-8 md:grid-cols-1">
             <FadeIn direction="right">
-              <div className="bg-secondary/50 border-secondary h-full rounded-xl border p-6 backdrop-blur-xs">
+              <div className="bg-secondary/20 border-secondary h-full rounded-xl border p-6 backdrop-blur-xs">
                 <div className="mb-4 flex items-center gap-4">
                   <div className="bg-accent/10 rounded-lg p-3">
                     <Mail className="text-accent h-6 w-6" />
@@ -81,7 +81,7 @@ export function ContactSection() {
                   size: "lg",
                 })}
               >
-                Register for Techathon
+                More Details
               </Link>
             </div>
           </FadeIn>

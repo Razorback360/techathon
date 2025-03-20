@@ -8,16 +8,18 @@ import { StructureSection } from "@/components/structure-section";
 import { PrizesSection } from "@/components/prizes-section";
 import { ContactSection } from "@/components/contact-section";
 import { Footer } from "@/components/footer";
+import { FaqSection } from "@/components/faq-section";
 
 export default function Home() {
   return (
-    <main className="select-none">
+    <main>
       <AnimatedBackground />
       <Navbar />
       <HeroSection />
       <AboutSection />
       <StructureSection />
       <PrizesSection />
+      <FaqSection />
       <ContactSection />
       <Footer />
     </main>

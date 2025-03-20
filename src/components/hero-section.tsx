@@ -9,19 +9,19 @@ import Link from "next/link";
 
 const timers = [
   {
-    title: "Registration Closes",
+    title: "Registration Closes In",
     date: new Date("2025-03-29T00:00:00"),
   },
   {
-    title: "Hackathon Starts",
+    title: "Hackathon Starts In",
     date: new Date("2025-04-10T22:00:00"),
   },
   {
-    title: "Hackathon Design Phase Ends",
+    title: "Hackathon Design Phase Ends In",
     date: new Date("2025-04-11T01:00:00"),
   },
   {
-    title: "Hackathon Implementation Phase Ends",
+    title: "Hackathon Implementation Phase Ends In",
     date: new Date("2025-04-13T06:00:00"),
   },
 ];

@@ -82,6 +82,9 @@ export function Navbar() {
             >
               Structure
             </a>
+            <a href="#faq" className="hover:text-neon-blue transition-colors">
+              FAQ
+            </a>
             <a
               href="#prizes"
               className="hover:text-neon-blue transition-colors hover:cursor-pointer"
@@ -103,7 +106,7 @@ export function Navbar() {
                   size: "sm",
                 })}
               >
-                Register Now
+                More Details
               </Link>
             ) : (
               <Button variant="outline" size="sm" disabled>
@@ -136,6 +139,13 @@ export function Navbar() {
                 Structure
               </a>
               <a
+                href="#faq"
+                className="hover:text-neon-blue text-xl transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                FAQ
+              </a>
+              <a
                 href="#prizes"
                 className="hover:text-neon-blue text-xl transition-colors hover:cursor-pointer"
                 onClick={() => setIsMenuOpen(false)}
@@ -149,22 +159,16 @@ export function Navbar() {
               >
                 Contact
               </a>
-              {registrationOpen ? (
-                <Link
-                  href="https://forms.gle/rVZSGH5zWUk5SGNG7"
-                  target="_blank"
-                  className={buttonVariants({
-                    variant: "secondary",
-                    size: "sm",
-                  })}
-                >
-                  Register Now
-                </Link>
-              ) : (
-                <Button variant="outline" size="lg" className="mt-4" disabled>
-                  Coming Soon
-                </Button>
-              )}
+              <Link
+                href="https://forms.gle/rVZSGH5zWUk5SGNG7"
+                target="_blank"
+                className={buttonVariants({
+                  variant: "secondary",
+                  size: "sm",
+                })}
+              >
+                More Details
+              </Link>
             </nav>
           </div>
         </header>
