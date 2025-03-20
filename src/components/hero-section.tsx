@@ -81,7 +81,7 @@ export function HeroSection() {
             </div>
           </FadeIn>
 
-          <FadeIn delay={1}>
+          <FadeIn delay={1} className="flex justify-center gap-3">
             <Link
               href="https://forms.gle/rVZSGH5zWUk5SGNG7"
               target="_blank"
@@ -91,6 +91,15 @@ export function HeroSection() {
               })}
             >
               Register Now
+            </Link>
+            <Link
+              href="https://forms.gle/rVZSGH5zWUk5SGNG7"
+              target="_blank"
+              className={buttonVariants({
+                size: "lg",
+              })}
+            >
+              More Details
             </Link>
           </FadeIn>
         </div>
