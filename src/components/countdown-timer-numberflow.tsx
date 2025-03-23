@@ -65,7 +65,6 @@ export function CountdownTimer({ targetDate }: CountdownTimerProps) {
             opacityTiming={{ duration: 350, easing: "ease-out" }}
             className="w-full text-center text-3xl font-bold md:text-4xl"
             format={{ minimumIntegerDigits: 2 }}
-            digits={{ 0: { max: 2 }, 1: { max: 9 } }}
           />
         </div>
         <span className="mt-2 text-sm">Hours</span>
