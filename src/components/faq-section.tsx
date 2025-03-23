@@ -43,6 +43,17 @@ const faqs = [
     ),
   },
   {
+    question: "Are mixed-gender teams allowed?",
+    answer: (
+      <p>
+        While the event itself is open to both male and female participants,
+        each team must be composed of members of the same gender—either an
+        all-male team or an all-female team. Teams that include members of both
+        genders will not be accepted.
+      </p>
+    ),
+  },
+  {
     question: "Is there a specific theme for the hackathon?",
     answer: (
       <>
