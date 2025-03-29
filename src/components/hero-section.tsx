@@ -81,7 +81,7 @@ export function HeroSection() {
             </div>
           </FadeIn>
 
-          <FadeIn delay={1} className="flex justify-center gap-3">
+          {/* <FadeIn delay={1} className="flex justify-center gap-3">
             <Link
               href="https://forms.gle/rVZSGH5zWUk5SGNG7"
               target="_blank"
@@ -101,7 +101,7 @@ export function HeroSection() {
             >
               More Details
             </Link>
-          </FadeIn>
+          </FadeIn> */}
         </div>
       </div>
 

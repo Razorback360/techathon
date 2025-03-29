@@ -119,7 +119,7 @@ export function PrizesSection() {
         </div>
       </div>
 
-      <div className="relative z-10 container mx-auto flex justify-center px-4 pt-12">
+      {/* <div className="relative z-10 container mx-auto flex justify-center px-4 pt-12">
         <Link
           href="https://forms.gle/rVZSGH5zWUk5SGNG7"
           target="_blank"
@@ -131,7 +131,7 @@ export function PrizesSection() {
         >
           More Details
         </Link>
-      </div>
+      </div> */}
     </section>
   );
 }

@@ -73,7 +73,7 @@ export function ContactSection() {
               <p className="text-muted-foreground mb-6">
                 Organized by KFUPM Computer Club
               </p>
-              <Link
+              {/* <Link
                 href="https://forms.gle/rVZSGH5zWUk5SGNG7"
                 target="_blank"
                 className={buttonVariants({
@@ -82,7 +82,7 @@ export function ContactSection() {
                 })}
               >
                 More Details
-              </Link>
+              </Link> */}
             </div>
           </FadeIn>
         </div>

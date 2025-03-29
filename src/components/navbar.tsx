@@ -97,7 +97,7 @@ export function Navbar() {
             >
               Contact
             </a>
-            <Link
+            {/* <Link
               href="https://forms.gle/rVZSGH5zWUk5SGNG7"
               target="_blank"
               className={buttonVariants({
@@ -106,7 +106,7 @@ export function Navbar() {
               })}
             >
               Register Now
-            </Link>
+            </Link> */}
           </nav>
         </div>
       </header>
@@ -153,7 +153,7 @@ export function Navbar() {
               >
                 Contact
               </a>
-              <Link
+              {/* <Link
                 href="https://forms.gle/rVZSGH5zWUk5SGNG7"
                 target="_blank"
                 className={buttonVariants({
@@ -162,7 +162,7 @@ export function Navbar() {
                 })}
               >
                 More Details
-              </Link>
+              </Link> */}
             </nav>
           </div>
         </header>
