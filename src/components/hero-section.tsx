@@ -14,15 +14,15 @@ const timers = [
   },
   {
     title: "Hackathon Starts In",
-    date: new Date("2025-04-10T22:00:00"),
+    date: new Date("2025-04-10T18:00:00"),
   },
   {
     title: "Hackathon Design Phase Ends In",
-    date: new Date("2025-04-11T01:00:00"),
+    date: new Date("2025-04-10T21:00:00"),
   },
   {
     title: "Hackathon Implementation Phase Ends In",
-    date: new Date("2025-04-13T06:00:00"),
+    date: new Date("2025-04-13T12:00:00"),
   },
 ];
 
